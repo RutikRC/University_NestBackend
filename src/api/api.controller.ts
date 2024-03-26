@@ -36,7 +36,7 @@ export class RankController {
     }
 
     @Get('filter-budget')
-    async getBudgetsAboveThreshold(@Param('budget_value') budget_value: number): Promise<Rank[]> {
+    async getBudgetsAboveThreshold(@Query('budget_value') budget_value: number): Promise<Rank[]> {
         return this.rankService.getBudgetsFilter(budget_value);
     }
 
