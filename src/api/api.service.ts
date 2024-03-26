@@ -69,25 +69,38 @@ export class RankService {
         return filteredRanks;
     }
 
-    async getRanksAboveThreshold(value: number): Promise<Rank[]> {
-        const fromRank = value - 5000;
+    async getRanksFilter(rank: number): Promise<Rank[]> {
+        const fromRank = Number(rank) - 5000;
+        // console.log(fromRank);
+        // console.log(rank)
         const ranks = await this.rankModel.find({ rank: { $gte: fromRank } }).populate('college');
         if (!ranks) {
-            throw new NotFoundException(`No ranks found above the threshold ${value}`);
+            throw new NotFoundException(`No ranks found above the threshold ${rank}`);
         }
         return ranks;
     }
 
 
-    async getScoresBelowThreshold(score: number): Promise<Rank[]> {
-        const threshold = score + 20; // Adding 20 to the provided score value
-        console.log(score);
-        console.log(20+70);
-        console.log(threshold);
+    async getScoresFilter(score: number): Promise<Rank[]> {
+        const threshold = Number(score) + 20; // Explicitly convert score to a number before addition
+        // console.log(score);
+        // console.log(threshold); // Log the threshold value to check
         const ranks = await this.rankModel.find({ score: { $lte: threshold } }).populate('college');
         
         if (!ranks || ranks.length === 0) {
             throw new NotFoundException(`No ranks found below the threshold score ${score}`);
+        }
+        return ranks;
+    }
+
+    async getBudgetsFilter(budget: number): Promise<Rank[]> {
+        const temp = Number(budget) + 100000; // Adding 100000 to the provided budget value
+        // console.log(budget);
+        // console.log(threshold); // Log the threshold value to check
+        const ranks = await this.rankModel.find({ budget: { $lte: temp } }).populate('college');
+        
+        if (!ranks || ranks.length === 0) {
+            throw new NotFoundException(`No ranks found above the threshold budget ${budget}`);
         }
         return ranks;
     }

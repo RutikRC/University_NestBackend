@@ -5,16 +5,16 @@ import { CollegeData, CollegeSchema } from './data.schema'; // Assuming you have
 @Schema()
 export class Rank {
     @Prop()
-    rank: string;
+    rank: number;
 
     @Prop()
-    score: string;
+    score: number;
 
     @Prop()
-    year: string;
+    year: number;
 
     @Prop()
-    budget: string;
+    budget: number;
 
     @Prop()
     category: string;

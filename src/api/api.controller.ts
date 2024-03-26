@@ -25,14 +25,19 @@ export class RankController {
     }
 
 
-    @Get('filter')
-    async getRanksAboveThreshold(@Query('value') value: number): Promise<Rank[]> {
-        return this.rankService.getRanksAboveThreshold(value);
+    @Get('filter-rank')
+    async getRanksAboveThreshold(@Query('rank_value') rank_value: number): Promise<Rank[]> {
+        return this.rankService.getRanksFilter(rank_value);
     }
 
-    @Get('filter-below')
+    @Get('filter-score')
     async getScoresBelowThreshold(@Query('score_value') score: number): Promise<Rank[]> {
-        return this.rankService.getScoresBelowThreshold(score);
+        return this.rankService.getScoresFilter(score);
+    }
+
+    @Get('filter-budget')
+    async getBudgetsAboveThreshold(@Param('budget_value') budget_value: number): Promise<Rank[]> {
+        return this.rankService.getBudgetsFilter(budget_value);
     }
 
     @Get(':id')

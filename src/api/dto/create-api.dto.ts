@@ -5,22 +5,22 @@ export class CreateRankDto {
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    rank: string;
+    rank: number;
 
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    score: string;
+    score: number;
 
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    year: string;
+    year: number;
 
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    budget: string;
+    budget: number;
 
     @ApiProperty()
     @IsString()
