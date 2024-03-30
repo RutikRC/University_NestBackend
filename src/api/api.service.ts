@@ -61,4 +61,12 @@ export class CollegeDataService {
       throw new Error(`Failed to insert data into the database: ${error.message}`);
     }
   }
+
+  async getAllData() {
+    return this.collegeModel.find().exec();
+  }
+
+  async getDataById(id: string) {
+    return this.collegeModel.findById(id).exec();
+  }
 }

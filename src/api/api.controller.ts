@@ -1,4 +1,4 @@
-import { Controller, Post, UploadedFile, UseInterceptors, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Param, UploadedFile, UseInterceptors, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CollegeDataService } from './api.service';
 import { diskStorage } from 'multer';
@@ -20,5 +20,15 @@ export class CollegeDataController {
     } catch (error) {
       throw new HttpException(`Failed to upload XLSX file: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  @Get()
+  async getAllData() {
+    return this.collegeService.getAllData();
+  }
+
+  @Get(':id')
+  async getDataById(@Param('id') id: string) {
+    return this.collegeService.getDataById(id);
   }
 }
