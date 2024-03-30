@@ -26,7 +26,8 @@ export class CollegeDataService {
     const data = xlsx.utils.sheet_to_json(worksheet);
 
     try {
-      await this.saveData(data); // Call saveData function to save data to the database
+      await this.deleteAllData(); // Delete existing data before inserting new data
+      await this.saveData(data); // Call saveData function to save new data to the database
     } catch (error) {
       throw new Error(`Failed to save data: ${error.message}`);
     }
@@ -34,12 +35,6 @@ export class CollegeDataService {
 
   async saveData(data: any[]): Promise<void> {
     const createCollegeDto: CreateCollegeDto[] = data.map((item) => {
-      // Extract budget data and parse it
-      // const budget1 = item['Budget only tuition fees + Development fees'];
-      // console.log('Budget from Excel:', budget1);
-      // const parsedBudget = budget1 ? parseInt(budget1.replace(/,/g,''), 10) : undefined;
-      // console.log('Parsed Budget:', parsedBudget);
-
       return {
         code: item['Code'],
         college_name: item['College Name'],
@@ -60,6 +55,10 @@ export class CollegeDataService {
     } catch (error) {
       throw new Error(`Failed to insert data into the database: ${error.message}`);
     }
+  }
+
+  async deleteAllData() {
+    return this.collegeModel.deleteMany({}).exec();
   }
 
   async getAllData() {
